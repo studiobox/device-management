@@ -30,7 +30,7 @@ createTable();
 
 // GET ALL DEVICES
 router.get('/', (req, res, next) => {
-    const sql = `SELECT * FROM devices`
+    const sql = `SELECT devices.*, subscriptions.title AS subscriptionTitle FROM devices, subscriptions WHERE devices.subscriptionId = subscriptions.id`
     let params = []
     db.all(sql, params, (err, rows) => {
         if (err) {

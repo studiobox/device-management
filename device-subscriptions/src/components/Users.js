@@ -12,7 +12,7 @@ export default class Users extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://192.168.0.179:5000/api/users')
+        axios.get('http://localhost:5000/api/users')
         .then(ret => {
             console.log('User Data: ',ret.data.data)
             //this.userData = ret.data.data
@@ -24,14 +24,14 @@ export default class Users extends React.Component {
         console.log('User Render',this.userData);
         return(
             <div className="container-fluid">
-                <div className="page-title d-flex">
-                    <h2>Users</h2>
-                    <button className="btn btn-sm btn-primary ml-auto">Add New</button>
+                <div className="page-title">
+                    <h2 className="d-inline-flex">Users</h2>
+                    <button className="btn btn-sm btn-primary d-inline-flex ml-2">Add New</button>
                 </div>
-                <table className="table table-bordered table-striped table-hover">
+                <table className="table table-bordered table-hover">
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col">Id</th>
+                            <th scope="col"></th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Username</th>
@@ -39,10 +39,10 @@ export default class Users extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.userData.map((obj) => {
+                        {this.state.userData.map((obj, index) => {
                             return (
                                <tr key={obj.id}>
-                                   <td>{obj.id}</td>
+                                   <td>{index + 1}</td>
                                    <td>{obj.name}</td>
                                    <td>{obj.email}</td>
                                    <td>{obj.username}</td>
