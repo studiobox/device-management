@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow:300,300i,400,400i,600,600i&display=swap');
+
+html, 
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.App {
+  height: 100%;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #222;
+  background-color: #f8fafc;
+}
+
+p {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+}
+
+.page-title {
+  padding: 15px;
+}

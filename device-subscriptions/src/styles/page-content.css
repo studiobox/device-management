@@ -1,0 +1,30 @@
+.page-container {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    border-top: 0.8px solid #fff;
+}
+
+.sidebar-list {
+    padding: 0px;
+    list-style: none;
+}
+
+.sidebar-list > a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar-list > a > li{
+    padding: 15px 0px 10px 30px;
+    cursor: pointer;
+}
+
+.sidebar-list > li:hover{
+    color: #222;
+    background-color: #fff;
+}
+
+.page-content {
+    overflow: hidden;
+}

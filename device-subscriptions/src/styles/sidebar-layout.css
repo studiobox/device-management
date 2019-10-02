@@ -1,0 +1,24 @@
+.sidebar-container {
+    height: 100%;
+    overflow: hidden;
+    width: 15%;
+    background-color: #222;
+    color: #fff;
+    border-top: 0.8px solid #fff;
+    float: left;
+}
+
+.sidebar-list {
+    padding: 0px;
+    list-style: none;
+}
+
+.sidebar-list > a{
+    padding: 15px 0px 10px 30px;
+    cursor: pointer;
+}
+
+.sidebar-list > li:hover{
+    color: #222;
+    background-color: #fff;
+}
