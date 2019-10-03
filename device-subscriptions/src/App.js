@@ -4,8 +4,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import login from './components/login'
-import LandingPage from './pages/LandingPage'
-import Subscription from './components/Subscription'
+import LandingPage from './pages/LandingPage';
+import ProtectedRoute from './protected.route';
 
 function App() {
   return (
@@ -13,7 +13,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={login} />
-          <Route path="/" component={LandingPage} />
+          {/* <Route path="/" component={LandingPage} /> */}
+          <ProtectedRoute path="/" component={LandingPage} />
           >
         </Switch>
       </BrowserRouter>

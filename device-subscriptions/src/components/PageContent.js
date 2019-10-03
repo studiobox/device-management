@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import Users from './Users'
-import Subscription from './Subscription'
-import Devices from './Devices'
+import Users from './Users/Users'
+import Subscription from './Subscriptions/Subscription';
+import Devices from './Devices/Devices'
 import '../styles/page-content.css'
 import '../styles/sidebar-layout.css'
 

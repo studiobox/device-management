@@ -38,6 +38,31 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
+// GET ALL USERS
+router.post('/login', (req, res, next) => {
+    const sql = `SELECT id, name, email, username FROM users WHERE email = '${req.body.email}' AND password = '${md5(req.body.password)}'`
+    let params = []
+    db.get(sql, params, (err, row) => {
+        // console.log('data: ', sql)
+        if (err) {
+            res.status(400).json({ "error": err.message })
+            return
+        }
+
+        if ( row !== undefined ) {
+            res.status(200).json({
+                "message": "success",
+                "data": row
+            })
+        } else {
+            res.status(200).json({
+                "message": "failed",
+                "data": "Please check login credentials"
+            })
+        }
+    })
+})
+
 // CREATE NEW USER
 router.post('/', (req, res, next) => {
     let errors = []
@@ -87,7 +112,7 @@ router.patch('/:id', (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password ? md5(req.body.password) : null
+        password: (req.body.password && req.body.password !== '') ? md5(req.body.password) : null
     }
 
     db.run(

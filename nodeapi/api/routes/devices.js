@@ -22,7 +22,7 @@ const createTable = function() {
             // console.log('Devices Error:', err)
             return
         }
-        console.log('Devices Table create successfully!')
+        // console.log('Devices Table create successfully!')
     })
 }
 
@@ -82,6 +82,7 @@ router.post('/', (req, res, next) => {
     const data = {
         deviceId: req.body.deviceId,
         deviceName: req.body.deviceName ? req.body.deviceName : null,
+        deviceStatus: req.body.deviceStatus ? req.body.deviceStatus : null,
         registeredDate: dateTime.create().format('Y-m-d H:M:S'),
         subscriptionId: req.body.subscriptionId ? req.body.subscriptionId : null,
         subscriptionActivation: req.body.subscriptionId ? dateTime.create().format('Y-m-d H:M:S') : null
@@ -89,8 +90,8 @@ router.post('/', (req, res, next) => {
     // var formatted = dt.format('Y-m-d H:M:S');
 
     const sql = `INSERT INTO devices
-        (deviceId, deviceName, registeredDate, subscriptionId, subscriptionActivation) VALUES (?,?,?,?,?)`
-    const params = [data.deviceId, data.deviceName, data.registeredDate, data.subscriptionId, data.subscriptionActivation]
+        (deviceId, deviceName, deviceStatus, registeredDate, subscriptionId, subscriptionActivation) VALUES (?,?,?,?,?,?)`
+    const params = [data.deviceId, data.deviceName, data.deviceStatus, data.registeredDate, data.subscriptionId, data.subscriptionActivation]
 
     db.run(sql, params, function (err, result) {
         if ( err ) {
@@ -111,6 +112,7 @@ router.patch('/:id', (req, res, next) => {
     const data = {
         deviceId: req.body.deviceId,
         deviceName: req.body.deviceName ? req.body.deviceName : null,
+        deviceStatus: req.body.deviceStatus ? req.body.deviceStatus : null,
         subscriptionId: req.body.subscriptionId ? req.body.subscriptionId : null,
         subscriptionActivation: req.body.subscriptionId ? dateTime.create().format('Y-m-d H:M:S') : null
     }
@@ -119,10 +121,11 @@ router.patch('/:id', (req, res, next) => {
         `UPDATE devices set
             deviceId = COALESCE(?,deviceId),
             deviceName = COALESCE(?,deviceName),
+            deviceStatus = COALESCE(?,deviceStatus),
             subscriptionId = COALESCE(?,subscriptionId),
             subscriptionActivation = COALESCE(?,subscriptionActivation)
             WHERE id = ?`,
-        [data.deviceId, data.deviceName, data.subscriptionId, data.subscriptionActivation, req.params.id],
+        [data.deviceId, data.deviceName, data.deviceStatus, data.subscriptionId, data.subscriptionActivation, req.params.id],
         function(err, result) {
             if ( err ) {
                 res.status(400).json({ "error": err.message })

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom'
 import '../styles/login-layout.css'
-import Header from './Header'
+import Auth from '../Auth';
+import axios from 'axios';
 
 export default class login extends React.Component {
 
@@ -9,10 +10,14 @@ export default class login extends React.Component {
         super(props);
         this.state = {
             formValues: {
-              username: "",
+              email: "",
               password: ""
             },
-            redirect: false
+            redirect: false,
+            alert: {
+                type: '',
+                message: ''
+            }
         };
         
     }
@@ -37,18 +42,51 @@ export default class login extends React.Component {
     };
     
     handleSubmit = event => {
-        const { history } = this.props;
+        // const { history } = this.props;
         event.preventDefault();
-        const { formValues, formValidity } = this.state;
-        console.log('Event: ',event,'formValues: ',formValues,'formValidity: ',formValidity);
-        if(formValues.email === 'root' && formValues.password === 'root') {
-            this.setRedirect();
-        }
-        history.push('/');
+        const { formValues } = this.state;
+        // console.log('Event: ',event,'formValues: ',formValues,'formValidity: ',formValidity);
+        // if(formValues.email === 'root' && formValues.password === 'root') {
+        //     this.setRedirect();
+        // }
+        // history.push('/');
+        // console.log('event: ', this.state.formValues);
+
+        axios.post('http://localhost:5000/api/users/login', formValues)
+        .then(res => {
+            // console.log('Login User: ',res)
+            if ( res.data.message === 'success' ) {
+                if ( Auth.login(res.data.data) ) {
+                    this.props.history.push('/');
+                }
+            } else {
+                const alert = {
+                    type: res.data.data,
+                    message: res.data.message
+                };
+                this.setState({alert: alert})
+
+                setTimeout(this.closeAlert,5000);
+            }
+        })
+
+        // Auth.login(() => {
+            
+        //     return this.props.history.push('/');
+        // })
     };
 
     render() {
         const { formValues } = this.state;
+        // console.log('this.state.alert: ',this.state.alert);
+        let alert;
+        if ( this.state.alert.type !== '' ) {
+            alert = <div className={'alert ' + ((this.state.alert.message === 'failed') ? 'alert-danger' : '')} role="alert">
+                <p>{this.state.alert.type}</p>
+            </div>;
+        } else {
+            alert = null;
+        }
         return(
             <div className="container login-container">
                 {this.renderRedirect()}
@@ -57,15 +95,16 @@ export default class login extends React.Component {
                         <h1 className="mt-5">Login Form</h1>
                     </div>
                 </div>
+                {alert}
                 <div className="row">
                     <div className="col-lg-12">
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <label>User Name</label>
+                                <label>Email</label>
                                 <input
                                     name="email"
                                     className='form-control'
-                                    placeholder="Enter User name"
+                                    placeholder="Enter Email"
                                     onChange={this.handleChange}
                                     value={formValues.email}
                                 />

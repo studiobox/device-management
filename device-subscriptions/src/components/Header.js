@@ -1,11 +1,16 @@
 import React from 'react';
-import '../styles/header-layout.css'
+import '../styles/header-layout.css';
+import Auth from '../Auth';
+import {Redirect, withRouter} from 'react-router-dom';
+import { NavDropdown } from 'react-bootstrap';
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
 
     constructor(props){
         super(props);
-        this.state={}
+        this.state={
+            user: Auth.getUser()
+        }
     }
 
     render() {
@@ -21,17 +26,26 @@ export default class Header extends React.Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Welcome Admin!
+                        {/* <li className="nav-item"><a className="nav-link" onClick={() => {
+                            Auth.logout(() => {
+                                this.props.history.push('/login');
+                            })
+                        }}>Logout</a></li> */}
+                        <NavDropdown title={this.state.user.name} id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick={() => {
+                                Auth.logout(() => {
+                                    this.props.history.push('/login');
+                                })
+                            }}>Logout</NavDropdown.Item>
+                        </NavDropdown>
+                        {/* <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Welcome {this.state.user.name}!
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Something else here</a>
+                            <a className="dropdown-item" href="/">Logout</a>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </nav>
@@ -39,3 +53,5 @@ export default class Header extends React.Component {
     }
 
 }
+
+export default withRouter(Header);

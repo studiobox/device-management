@@ -15,7 +15,7 @@ const createTable = function() {
             return
     
         }
-        console.log('Subscriptions Table create successfully!')
+        // console.log('Subscriptions Table create successfully!')
     })
 }
 
@@ -97,15 +97,14 @@ router.post('/', (req, res, next) => {
 // UPDATE AN SINGLE SUBSCRIPTION
 router.patch('/:id', (req, res, next) => {
     const data = {
-        deviceId: req.body.deviceId,
-        deviceName: req.body.deviceName ? req.body.deviceName : null
+        title: req.body.title
     }
 
     db.run(
         `UPDATE subscriptions set
             title = COALESCE(?,title)
             WHERE id = ?`,
-        [data.title],
+        [data.title, req.params.id],
         function(err, result) {
             if ( err ) {
                 res.status(400).json({ "error": err.message })
