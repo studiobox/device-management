@@ -1,9 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const userRoute = require('./api/routes/users')
-const subscriptionsRoute = require('./api/routes/subscriptions')
-const devicesRoute = require('./api/routes/devices')
+// const userRoute = require('./api/routes/users')
+// const subscriptionsRoute = require('./api/routes/subscriptions')
+// const devicesRoute = require('./api/routes/devices')
+const router = require('./api/routes/index')
 
 const app = express();
 
@@ -29,9 +30,10 @@ app.get('/', function(req, res, next) {
     })
 })
 
-app.use('/api/users', userRoute)
-app.use('/api/subscriptions', subscriptionsRoute)
-app.use('/api/devices', devicesRoute)
+app.use('/api', router)
+// app.use('/api/users', userRoute)
+// app.use('/api/subscriptions', subscriptionsRoute)
+// app.use('/api/devices', devicesRoute)
 
 app.use(function(req, res) {
     res.status(404);
